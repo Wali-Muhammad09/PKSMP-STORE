@@ -1,6 +1,18 @@
 import streamlit as st
 import random
 import yagmail
+import uuid
+
+# Initialize a unique UUID for the entire session
+if 'user_uuid' not in st.session_state:
+    st.session_state.user_uuid = str(uuid.uuid4())
+
+# Assign to a variable for easy use
+user_id = st.session_state.user_uuid
+
+# Optional: display it for debugging
+st.write("Your session UUID:", user_id)
+
 
 SENDER_EMAIL = "pksmprankmanager@gmail.com"
 SENDER_PASSWORD = "wpoz fdpf nuko aczp"
@@ -170,7 +182,7 @@ st.markdown('<div class="subtitle">Choose a Rank and view its perks</div>', unsa
 
 # ---------------- SELECT ----------------
 choice = st.selectbox("Select a Rank", [r.name for r in ranks])
-
+#
 # ---------------- DISPLAY CARD ----------------
 for r in ranks:
     if r.name == choice:
@@ -234,7 +246,7 @@ for r in ranks:
 
             # Step 3: Only allow purchase submission if verified
             if st.session_state.verified_email:
-                description = st.text_area("Description (Optional)")
+                description = st.text_area("Description (Optional)", key=f"{user_id}_description")
                 if st.button("Submit Purchase Request"):
                     if discord and gmail:
                         try:
@@ -277,3 +289,4 @@ for r in ranks:
                             st.error("❌ Email sending failed. Check credentials.")
                     else:
                         st.error("❌ Discord Username and Gmail are required.")
+
