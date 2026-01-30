@@ -3,6 +3,8 @@ import random
 import yagmail
 import uuid
 
+st.text("NOTE: The CURRENCY SHOWN BELOW IS IN PKR, TO CONVERIT IT TO YOUR OWN CURRENCY SEARCH 'pkr to <ur currency>' on  ur browser")
+
 # Initialize a unique UUID for the entire session
 if 'user_uuid' not in st.session_state:
     st.session_state.user_uuid = str(uuid.uuid4())
@@ -289,4 +291,5 @@ for r in ranks:
                             st.error("❌ Email sending failed. Check credentials.")
                     else:
                         st.error("❌ Discord Username and Gmail are required.")
+
 
