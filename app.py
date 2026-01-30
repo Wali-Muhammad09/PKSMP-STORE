@@ -3,8 +3,6 @@ import random
 import yagmail
 import uuid
 
-st.text("NOTE: The CURRENCY SHOWN BELOW IS IN PKR, TO CONVERIT IT TO YOUR OWN CURRENCY SEARCH 'pkr to <ur currency>' on  ur browser")
-
 # Initialize a unique UUID for the entire session
 if 'user_uuid' not in st.session_state:
     st.session_state.user_uuid = str(uuid.uuid4())
@@ -181,6 +179,7 @@ ranks = [
 # ---------------- HEADER ----------------
 st.markdown('<div class="title">🔥 PKSMP STORE 🔥</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle">Choose a Rank and view its perks</div>', unsafe_allow_html=True)
+st.markdown("<div class="subtitle">NOTE: The CURRENCY SHOWN BELOW IS IN PKR, TO CONVERIT IT TO YOUR OWN CURRENCY SEARCH 'pkr to <ur currency>' on  ur browser"</div>", unsafe_allow_html = True)
 
 # ---------------- SELECT ----------------
 choice = st.selectbox("Select a Rank", [r.name for r in ranks])
@@ -291,5 +290,6 @@ for r in ranks:
                             st.error("❌ Email sending failed. Check credentials.")
                     else:
                         st.error("❌ Discord Username and Gmail are required.")
+
 
 
