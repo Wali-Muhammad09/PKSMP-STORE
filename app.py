@@ -179,7 +179,7 @@ ranks = [
 # ---------------- HEADER ----------------
 st.markdown('<div class="title">🔥 PKSMP STORE 🔥</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle">Choose a Rank and view its perks</div>', unsafe_allow_html=True)
-st.markdown("<div class="subtitle">NOTE: The CURRENCY SHOWN BELOW IS IN PKR, TO CONVERIT IT TO YOUR OWN CURRENCY SEARCH 'pkr to <ur currency>' on  ur browser</div>", unsafe_allow_html = True)
+st.markdown('<div class="subtitle">NOTE:The currency shown below is pkr ', unsafe_allow_html=True)
 
 # ---------------- SELECT ----------------
 choice = st.selectbox("Select a Rank", [r.name for r in ranks])
@@ -290,6 +290,7 @@ for r in ranks:
                             st.error("❌ Email sending failed. Check credentials.")
                     else:
                         st.error("❌ Discord Username and Gmail are required.")
+
 
 
 
