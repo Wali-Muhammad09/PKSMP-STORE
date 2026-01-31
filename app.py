@@ -89,33 +89,33 @@ class Crate:
 
 # ---------------- DATA ----------------
 ranks = [
-    Rank("PRO", "1 USDT",
+    Rank("PRO Rank", "1 USDT",
          "Iron Armor Kit (24h)\n"
          "1 Golden Apple\n"
          "Food\n"
          "/kit PRO"),
 
-    Rank("VIP", "2 USDT",
+    Rank("VIP Rank", "2 USDT",
          "Iron Armor Kit (Unbreaking 1, Protection 1)\n"
          "6 Golden Apples\n"
          "Food\n"
          "/kit VIP"),
 
-    Rank("Deadliest", "3 USDT",
+    Rank("Deadliest Rank", "3 USDT",
          "Diamond Armor Kit (24h)\n"
          "8 Golden Apples\n"
          "Food\n"
          "/echest\n"
          "/kit Deadliest"),
 
-    Rank("God", "4 USDT",
+    Rank("God Rank", "4 USDT",
          "Diamond Armor Kit (Unbreaking 1, Protection 2)\n"
          "16 Golden Apples\n"
          "/echest\n"
          "/craft\n"
          "/kit God"),
 
-    Rank("Hero", "5 USDT",
+    Rank("Hero Rank", "5 USDT",
          "Diamond Armor Kit (Unbreaking 2, Protection 2) every 24h\n"
          "20 Golden Apples\n"
          "Food\n"
@@ -124,7 +124,7 @@ ranks = [
          "/anvil\n"
          "/kit Hero"),
 
-    Rank("Devil", "6 USDT",
+    Rank("Devil Rank", "6 USDT",
          "Diamond Armor Kit (Unbreaking 3, Protection 3) every 24h\n"
          "32 Golden Apples\n"
          "Food\n"
@@ -138,11 +138,11 @@ ranks = [
 
 
 crates=[
-Crate("Common","0.5 USDT"),
-Crate("Rare","1 USDT"),
-Crate("Epic","2 USDT"),
-Crate("Legendary","3 USDT"),
-Crate("Mythic","4 USDT")
+Crate("Common Crate Key","0.5 USDT"),
+Crate("Rare Crate Key","1 USDT"),
+Crate("Epic Crate Key","2 USDT"),
+Crate("Legendary Crate Key","3 USDT"),
+Crate("Mythic Crate Key","4 USDT")
 ]
 
 # ---------------- HEADER ----------------
@@ -249,6 +249,7 @@ if store=="Crate Keys":
             """,unsafe_allow_html=True)
 
             purchase(c.name+" Crate Key")
+
 
 
 
