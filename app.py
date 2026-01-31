@@ -206,7 +206,7 @@ def purchase(item):
                         st.session_state.show_form=False
                         st.session_state.verified=False
                         st.session_state.code=None
-                    else:
+                    except:
                         st.error("Error")
 # ---------------- RANK STORE ----------------
 if store=="Ranks":
@@ -240,6 +240,7 @@ if store=="Crate Keys":
             """,unsafe_allow_html=True)
 
             purchase(c.name+" Crate Key")
+
 
 
 
