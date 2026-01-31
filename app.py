@@ -3,131 +3,91 @@ import random
 import yagmail
 import uuid
 
-# Initialize a unique UUID for the entire session
-if 'user_uuid' not in st.session_state:
-    st.session_state.user_uuid = str(uuid.uuid4())
-
-# Assign to a variable for easy use
-user_id = st.session_state.user_uuid
-
-# Optional: display it for debugging
-st.write("Your session UUID:", user_id)
-
-
+# ---------------- CONFIG ----------------
 SENDER_EMAIL = "pksmprankmanager@gmail.com"
 SENDER_PASSWORD = "wpoz fdpf nuko aczp"
 OWNER_EMAIL = "pksmpminecraft@gmail.com"
 
-# ---------------- PAGE CONFIG ----------------
-st.set_page_config(
-    page_title="PKSMP Store",
-    page_icon="🔥",
-    layout="centered"
-)
+st.set_page_config(page_title="PKSMP Store", page_icon="🔥")
 
-# ---------------- CUSTOM CSS ----------------
+# ---------------- SESSION ----------------
+if "user_uuid" not in st.session_state:
+    st.session_state.user_uuid = str(uuid.uuid4())
+
+# ---------------- CSS ----------------
 st.markdown("""
 <style>
 
-body {
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 }
 
-.title {
-    text-align: center;
-    font-size: 48px;
-    font-weight: bold;
-    color: #00ffcc;
+.title{
+text-align:center;
+font-size:48px;
+color:#00ffcc;
+font-weight:bold;
 }
 
-.subtitle {
-    text-align: center;
-    color: #cccccc;
-    margin-bottom: 30px;
+.subtitle{
+text-align:center;
+color:#ccc;
 }
 
-.rank-card {
-    background: #111;
-    padding: 22px;
-    border-radius: 18px;
-    margin-top: 25px;
+/* CARDS */
+.rank-card,.crate-card{
+background:#111;
+padding:22px;
+border-radius:18px;
+margin-top:25px;
 }
 
-.rank-name {
-    font-size: 28px;
-    font-weight: bold;
+.rank-name,.crate-name{
+font-size:28px;
+font-weight:bold;
 }
 
-.price {
-    font-size: 22px;
-    margin-top: 10px;
+.price,.crate-price{
+font-size:22px;
+margin-top:10px;
 }
 
-.perks {
-    margin-top: 10px;
-    color: #ddd;
-    line-height: 1.6;
+.perks{
+color:#ddd;
+line-height:1.6;
 }
 
-/* PRO - Pink */
-.pro {
-    box-shadow: 0 0 12px rgba(255,105,180,0.7),
-                0 0 30px rgba(255,105,180,0.4);
-    color: hotpink;
-}
+/* RANK GLOWS */
+.pro{box-shadow:0 0 12px hotpink;color:hotpink;}
+.vip{box-shadow:0 0 12px #fff7a0;color:#fff7a0;}
+.deadliest{box-shadow:0 0 12px #6fb8ff;color:#6fb8ff;}
+.god{box-shadow:0 0 12px gold;color:gold;}
+.hero{box-shadow:0 0 12px #66ff99;color:#66ff99;}
+.devil{box-shadow:0 0 12px #ff4c4c;color:#ff4c4c;}
 
-/* VIP - Light Yellow */
-.vip {
-    box-shadow: 0 0 12px rgba(255,255,150,0.7),
-                0 0 30px rgba(255,255,150,0.4);
-    color: #fff7a0;
-}
-
-/* Deadliest - Blue */
-.deadliest {
-    box-shadow: 0 0 12px rgba(0,150,255,0.7),
-                0 0 30px rgba(0,150,255,0.4);
-    color: #6fb8ff;
-}
-
-/* GOD - Gold */
-.god {
-    box-shadow: 0 0 12px rgba(255,200,0,0.8),
-                0 0 30px rgba(255,200,0,0.5);
-    color: gold;
-}
-
-/* HERO - Lime */
-.hero {
-    box-shadow: 0 0 12px rgba(0,255,100,0.7),
-                0 0 30px rgba(0,255,100,0.4);
-    color: #66ff99;
-}
-
-/* DEVIL - Dark Red */
-.devil {
-    box-shadow: 0 0 12px rgba(180,0,0,0.8),
-                0 0 30px rgba(180,0,0,0.5);
-    color: #ff4c4c;
-}
-.payment-note {
-    font-size: 13px;
-    color: #aaaaaa;
-    margin-top: 8px;
-    text-align: left;
-    font-style: italic;
-}
+/* CRATE GLOWS */
+.common{box-shadow:0 0 12px #ddd;color:#ddd;}
+.rare{box-shadow:0 0 12px #6fdcff;color:#6fdcff;}
+.epic{box-shadow:0 0 12px #d28cff;color:#d28cff;}
+.legendary{box-shadow:0 0 12px gold;color:gold;}
+.mythic{box-shadow:0 0 12px #ff7ac8;color:#ff7ac8;}
 
 </style>
 """, unsafe_allow_html=True)
 
-# ---------------- DATA ----------------
+# ---------------- CLASSES ----------------
 class Rank:
-    def __init__(self, name, price, perks):
-        self.name = name
-        self.price = price
-        self.perks = perks
+    def __init__(self,name,price,perks):
+        self.name=name
+        self.price=price
+        self.perks=perks
 
+class Crate:
+    def __init__(self,name,price):
+        self.name=name
+        self.price=price
+
+# ---------------- DATA ----------------
 ranks = [
     Rank("PRO", "1 USDT",
          "Iron Armor Kit (24h)\n"
@@ -171,128 +131,109 @@ ranks = [
          "/echest\n"
          "/craft\n"
          "/anvil\n"
-         "Access to /fix (This fixes the durability of all the items in your inventory)\n"
+         "Access to /fix\n"
          "Permission to /nick\n"
          "/kit Devil")
 ]
 
+
+crates=[
+Crate("Common","0.5 USDT"),
+Crate("Rare","1 USDT"),
+Crate("Epic","2 USDT"),
+Crate("Legendary","3 USDT"),
+Crate("Mythic","4 USDT")
+]
+
 # ---------------- HEADER ----------------
-st.markdown('<div class="title">🔥 PKSMP STORE 🔥</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">Choose a Rank and view its perks</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">NOTE:The currency shown below is USDT(Crypto Currency) ', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">Talk to owner in discord for discount : NotWxli', unsafe_allow_html=True)
-# ---------------- SELECT ----------------
-choice = st.selectbox("Select a Rank", [r.name for r in ranks])
-#
-# ---------------- DISPLAY CARD ----------------
-for r in ranks:
-    if r.name == choice:
-        glow_class = choice.lower()
+st.markdown("<div class='title'>🔥 PKSMP STORE 🔥</div>",unsafe_allow_html=True)
+store=st.selectbox("Choose Category",["Ranks","Crate Keys"])
 
-        st.markdown(f"""
-        <div class="rank-card {glow_class}">
+# ---------------- EMAIL PURCHASE SYSTEM ----------------
+def purchase(item):
+
+    if "show_form" not in st.session_state:
+        st.session_state.show_form=False
+
+    if st.button("Buy Now"):
+        st.session_state.show_form=True
+
+    if st.session_state.show_form:
+
+        st.markdown("### 📝 Purchase Info")
+
+        discord=st.text_input("Discord Username")
+        gmail=st.text_input("Gmail Address")
+
+        if "verified" not in st.session_state:
+            st.session_state.verified=False
+        if "code" not in st.session_state:
+            st.session_state.code=None
+
+        if not st.session_state.verified and gmail:
+            if st.button("Send Verification Code"):
+                try:
+                    st.session_state.code=str(random.randint(100000,999999))
+                    yag=yagmail.SMTP(SENDER_EMAIL,SENDER_PASSWORD)
+                    yag.send(gmail,"PKSMP Verification",
+                    f"Your code is: {st.session_state.code}")
+                    st.success("Code sent!")
+                except :
+                    st.error("Verification could not be sent. Please re-check your email")
+            if st.session_state.code and not st.session_state.verified:
+                entered=st.text_input("Enter Code")
+                if st.button("Verify"):
+                    if entered==st.session_state.code:
+                        st.session_state.verified=True
+                        st.success("Verified!")
+                    else:
+                        st.error("Wrong code")
+
+            if st.session_state.verified:
+                desc=st.text_area("Description (Optional)")
+                if st.button("Submit Purchase"):
+                    yag=yagmail.SMTP(SENDER_EMAIL,SENDER_PASSWORD)
+
+                    yag.send(gmail,"PKSMP Purchase",
+                    f"You ordered: {item}\nJoin discord: http://dsc.gg/pksmp")
+
+                    yag.send(OWNER_EMAIL,"New Order",
+                    f"Item: {item}\nDiscord:{discord}\nEmail:{gmail}\nDesc:{desc}")
+
+                    st.success("Request sent!")
+                    st.session_state.show_form=False
+                    st.session_state.verified=False
+                    st.session_state.code=None
+
+# ---------------- RANK STORE ----------------
+if store=="Ranks":
+
+    choice=st.selectbox("Select Rank",[r.name for r in ranks])
+
+    for r in ranks:
+        if r.name==choice:
+            st.markdown(f"""
+            <div class="rank-card {choice.lower()}">
             <div class="rank-name">{r.name}</div>
-            <div class="price">💰 {r.price}</div>
-            <div class="perks">
-                ⭐ Perks:<br>
-                {"<br>".join(r.perks.splitlines())}
+            <div class="price">{r.price}</div>
+            <div class="perks">{"<br>".join(r.perks.splitlines())}</div>
             </div>
-        </div>
-        """, unsafe_allow_html=True)
+            """,unsafe_allow_html=True)
 
-        if st.button("Buy Now"):
-            st.session_state.show_form = True
+            purchase(choice)
 
-        if "show_form" not in st.session_state:
-            st.session_state.show_form = False
+# ---------------- CRATE STORE ----------------
+if store=="Crate Keys":
 
-        # ---------------- PURCHASE FORM ----------------
-        if st.session_state.show_form:
+    crate_choice=st.selectbox("Select Crate",[c.name for c in crates])
 
-            st.markdown("### 📝 Purchase Information")
+    for c in crates:
+        if c.name==crate_choice:
+            st.markdown(f"""
+            <div class="crate-card {c.name.lower()}">
+            <div class="crate-name">{c.name} Crate Key</div>
+            <div class="crate-price">{c.price}</div>
+            </div>
+            """,unsafe_allow_html=True)
 
-            discord = st.text_input("Discord Username")
-            gmail = st.text_input("Gmail Address")
-
-            # Initialize session state for verification
-            if "verified_email" not in st.session_state:
-                st.session_state.verified_email = False
-            if "verification_code" not in st.session_state:
-                st.session_state.verification_code = None
-
-            # Step 1: Send verification code
-            if not st.session_state.verified_email and gmail:
-                if st.button("Send Verification Code"):
-                    st.session_state.verification_code = str(random.randint(100000, 999999))
-                    try:
-                        yag = yagmail.SMTP(SENDER_EMAIL, SENDER_PASSWORD)
-                        yag.send(
-                            gmail,
-                            "PKSMP Store - Email Verification",
-                            f"Your verification code is: {st.session_state.verification_code}"
-                        )
-                        st.success("✅ Verification code sent to your email!")
-                    except:
-                        st.error("❌ Failed to send verification code. Check your email.")
-
-            # Step 2: Verify the code
-            if st.session_state.verification_code and not st.session_state.verified_email:
-                code_input = st.text_input("Enter Verification Code")
-                if st.button("Verify Email"):
-                    if code_input == st.session_state.verification_code:
-                        st.session_state.verified_email = True
-                        st.success("✅ Email verified!")
-                    else:
-                        st.error("❌ Incorrect code. Try again.")
-
-            # Step 3: Only allow purchase submission if verified
-            if st.session_state.verified_email:
-                description = st.text_area("Description (Optional)", key=f"{user_id}_description")
-                if st.button("Submit Purchase Request"):
-                    if discord and gmail:
-                        try:
-                            yag = yagmail.SMTP(SENDER_EMAIL, SENDER_PASSWORD)
-
-                            # Email to Buyer
-                            buyer_subject = "PKSMP Store - Purchase Instructions"
-                            buyer_body = f"""
-            Hello!
-
-            Thanks for your interest in purchasing the {choice} rank.
-
-            Please create a ticket in our Discord server:
-            http://dsc.gg/pksmp
-
-            Our staff will assist you further.
-
-            PKSMP Store Team
-            """
-                            yag.send(gmail, buyer_subject, buyer_body)
-
-                            # Email to Owner
-                            owner_subject = "New PKSMP Purchase Request"
-                            owner_body = f"""
-            New Purchase Request:
-
-            Rank: {choice}
-            Discord: {discord}
-            Gmail: {gmail}
-            Description: {description}
-            """
-                            yag.send(OWNER_EMAIL, owner_subject, owner_body)
-
-                            st.success("✅ Request submitted! Check your email.")
-                            st.session_state.show_form = False
-                            st.session_state.verified_email = False
-                            st.session_state.verification_code = None
-
-                        except:
-                            st.error("❌ Email sending failed. Check credentials.")
-                    else:
-                        st.error("❌ Discord Username and Gmail are required.")
-
-
-
-
-
-
+            purchase(c.name+" Crate Key")
