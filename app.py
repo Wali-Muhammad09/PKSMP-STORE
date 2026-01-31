@@ -138,11 +138,11 @@ ranks = [
 
 
 crates=[
-Crate("Common Crate Key","0.5 USDT"),
-Crate("Rare Crate Key","1 USDT"),
-Crate("Epic Crate Key","2 USDT"),
-Crate("Legendary Crate Key","3 USDT"),
-Crate("Mythic Crate Key","4 USDT")
+Crate("Common","0.5 USDT"),
+Crate("Rare","1 USDT"),
+Crate("Epic","2 USDT"),
+Crate("Legendary","3 USDT"),
+Crate("Mythic","4 USDT")
 ]
 
 # ---------------- HEADER ----------------
@@ -249,6 +249,7 @@ if store=="Crate Keys":
             """,unsafe_allow_html=True)
 
             purchase(c.name+" Crate Key")
+
 
 
 
