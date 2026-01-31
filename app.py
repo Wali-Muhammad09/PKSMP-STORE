@@ -129,33 +129,33 @@ class Rank:
         self.perks = perks
 
 ranks = [
-    Rank("PRO", "Rs.200",
+    Rank("PRO", "1 USDT",
          "Iron Armor Kit (24h)\n"
          "1 Golden Apple\n"
          "Food\n"
          "/kit PRO"),
 
-    Rank("VIP", "Rs.350",
+    Rank("VIP", "2 USDT",
          "Iron Armor Kit (Unbreaking 1, Protection 1)\n"
          "6 Golden Apples\n"
          "Food\n"
          "/kit VIP"),
 
-    Rank("Deadliest", "Rs.650",
+    Rank("Deadliest", "3 USDT",
          "Diamond Armor Kit (24h)\n"
          "8 Golden Apples\n"
          "Food\n"
          "/echest\n"
          "/kit Deadliest"),
 
-    Rank("God", "Rs.850",
+    Rank("God", "4 USDT",
          "Diamond Armor Kit (Unbreaking 1, Protection 2)\n"
          "16 Golden Apples\n"
          "/echest\n"
          "/craft\n"
          "/kit God"),
 
-    Rank("Hero", "Rs.1000",
+    Rank("Hero", "5 USDT",
          "Diamond Armor Kit (Unbreaking 2, Protection 2) every 24h\n"
          "20 Golden Apples\n"
          "Food\n"
@@ -164,7 +164,7 @@ ranks = [
          "/anvil\n"
          "/kit Hero"),
 
-    Rank("Devil", "Rs.1300",
+    Rank("Devil", "6 USDT",
          "Diamond Armor Kit (Unbreaking 3, Protection 3) every 24h\n"
          "32 Golden Apples\n"
          "Food\n"
@@ -179,8 +179,8 @@ ranks = [
 # ---------------- HEADER ----------------
 st.markdown('<div class="title">🔥 PKSMP STORE 🔥</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle">Choose a Rank and view its perks</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">NOTE:The currency shown below is pkr ', unsafe_allow_html=True)
-
+st.markdown('<div class="subtitle">NOTE:The currency shown below is USDT(Crypto Currency) ', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">Talk to owner in discord for discount : NotWxli', unsafe_allow_html=True)
 # ---------------- SELECT ----------------
 choice = st.selectbox("Select a Rank", [r.name for r in ranks])
 #
@@ -290,6 +290,7 @@ for r in ranks:
                             st.error("❌ Email sending failed. Check credentials.")
                     else:
                         st.error("❌ Discord Username and Gmail are required.")
+
 
 
 
