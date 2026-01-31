@@ -193,19 +193,21 @@ def purchase(item):
             if st.session_state.verified:
                 desc=st.text_area("Description (Optional)")
                 if st.button("Submit Purchase"):
-                    yag=yagmail.SMTP(SENDER_EMAIL,SENDER_PASSWORD)
-
-                    yag.send(gmail,"PKSMP Purchase",
-                    f"You ordered: {item}\nJoin discord: http://dsc.gg/pksmp")
-
-                    yag.send(OWNER_EMAIL,"New Order",
-                    f"Item: {item}\nDiscord:{discord}\nEmail:{gmail}\nDesc:{desc}")
-
-                    st.success("Request sent!")
-                    st.session_state.show_form=False
-                    st.session_state.verified=False
-                    st.session_state.code=None
-
+                    try:
+                        yag=yagmail.SMTP(SENDER_EMAIL,SENDER_PASSWORD)
+    
+                        yag.send(gmail,"PKSMP Purchase",
+                        f"You ordered: {item}\nJoin discord: http://dsc.gg/pksmp")
+    
+                        yag.send(OWNER_EMAIL,"New Order",
+                        f"Item: {item}\nDiscord:{discord}\nEmail:{gmail}\nDesc:{desc}")
+    
+                        st.success("Request sent!")
+                        st.session_state.show_form=False
+                        st.session_state.verified=False
+                        st.session_state.code=None
+                    else:
+                        st.error("Error")
 # ---------------- RANK STORE ----------------
 if store=="Ranks":
 
