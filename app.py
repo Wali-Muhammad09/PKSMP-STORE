@@ -196,7 +196,7 @@ def purchase(item):
                     yag=yagmail.SMTP(SENDER_EMAIL,SENDER_PASSWORD)
 
                     yag.send(gmail,"PKSMP Purchase",
-                    f"You ordered: {item}\nJoin discord: http://dsc.gg/pksmp")
+                    f"Thank you for your interest in purchasing a Rank/Crate Key from us.\nYou ordered: {item}\nJoin discord: http://dsc.gg/pksmp\n Join discord and create a ticket in our server to finalise ur purchase")
 
                     yag.send(OWNER_EMAIL,"New Order",
                     f"Item: {item}\nDiscord:{discord}\nEmail:{gmail}\nDesc:{desc}")
@@ -238,6 +238,7 @@ if store=="Crate Keys":
             """,unsafe_allow_html=True)
 
             purchase(c.name+" Crate Key")
+
 
 
 
