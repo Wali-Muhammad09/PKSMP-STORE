@@ -147,6 +147,7 @@ Crate("Mythic","4 USDT")
 
 # ---------------- HEADER ----------------
 st.markdown("<div class='title'>🔥 PKSMP STORE 🔥</div>",unsafe_allow_html=True)
+st.markdown("<div class='subtitle'>USDT is Crypto Currency | Search USDT to <your currency> in your browser for price</div>",unsafe_allow_html=True)
 store=st.radio("Choose Category",["Ranks","Crate Keys"])
 
 # ---------------- EMAIL PURCHASE SYSTEM ----------------
@@ -237,4 +238,5 @@ if store=="Crate Keys":
             """,unsafe_allow_html=True)
 
             purchase(c.name+" Crate Key")
+
 
