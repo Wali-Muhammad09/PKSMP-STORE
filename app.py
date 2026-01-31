@@ -152,62 +152,71 @@ store=st.radio("Choose Category",["Ranks","Crate Keys"])
 
 # ---------------- EMAIL PURCHASE SYSTEM ----------------
 def purchase(item):
-
     if "show_form" not in st.session_state:
-        st.session_state.show_form=False
+        st.session_state.show_form = False
+    if "verified" not in st.session_state:
+        st.session_state.verified = False
+    if "code" not in st.session_state:
+        st.session_state.code = ""
+    if "entered" not in st.session_state:
+        st.session_state.entered = ""
+    if "discord" not in st.session_state:
+        st.session_state.discord = ""
+    if "gmail" not in st.session_state:
+        st.session_state.gmail = ""
+    if "desc" not in st.session_state:
+        st.session_state.desc = ""
 
-    if st.button("Buy Now"):
-        st.session_state.show_form=True
+    if st.button("Buy Now", key=f"buy_{item}"):
+        st.session_state.show_form = True
 
     if st.session_state.show_form:
-
         st.markdown("### 📝 Purchase Info")
 
-        discord=st.text_input("Discord Username")
-        gmail=st.text_input("Gmail Address")
+        st.session_state.discord = st.text_input("Discord Username", value=st.session_state.discord, key=f"discord_{item}")
+        st.session_state.gmail = st.text_input("Gmail Address", value=st.session_state.gmail, key=f"gmail_{item}")
 
-        if "verified" not in st.session_state:
-            st.session_state.verified=False
-        if "code" not in st.session_state:
-            st.session_state.code=None
-
-        if not st.session_state.verified and gmail:
-            if st.button("Send Verification Code"):
+        if not st.session_state.verified and st.session_state.gmail:
+            if st.button("Send Verification Code", key=f"send_{item}"):
                 try:
-                    st.session_state.code=str(random.randint(100000,999999))
-                    yag=yagmail.SMTP(SENDER_EMAIL,SENDER_PASSWORD)
-                    yag.send(gmail,"PKSMP Verification",
-                    f"Your code is: {st.session_state.code}")
+                    st.session_state.code = str(random.randint(100000, 999999))
+                    yag = yagmail.SMTP(SENDER_EMAIL, SENDER_PASSWORD)
+                    yag.send(st.session_state.gmail, "PKSMP Verification",
+                             f"Your code is: {st.session_state.code}")
                     st.success("Code sent!")
-                except :
-                    st.error("Verification could not be sent. Please re-check your email")
-            if st.session_state.code and not st.session_state.verified:
-                entered=st.text_input("Enter Code")
-                if st.button("Verify"):
-                    if entered==st.session_state.code:
-                        st.session_state.verified=True
-                        st.success("Verified!")
-                    else:
-                        st.error("Wrong code")
+                except:
+                    st.error("Verification could not be sent. Please check your email")
 
-            if st.session_state.verified:
-                desc=st.text_area("Description (Optional)")
-                if st.button("Submit Purchase"):
-                    try:
-                        yag=yagmail.SMTP(SENDER_EMAIL,SENDER_PASSWORD)
-    
-                        yag.send(gmail,"PKSMP Purchase",
-                        f"You ordered: {item}\nJoin discord: http://dsc.gg/pksmp")
-    
-                        yag.send(OWNER_EMAIL,"New Order",
-                        f"Item: {item}\nDiscord:{discord}\nEmail:{gmail}\nDesc:{desc}")
-    
-                        st.success("Request sent!")
-                        st.session_state.show_form=False
-                        st.session_state.verified=False
-                        st.session_state.code=None
-                    except:
-                        st.error("Error")
+            st.session_state.entered = st.text_input("Enter Code", value=st.session_state.entered, key=f"code_{item}")
+            if st.button("Verify", key=f"verify_{item}"):
+                if st.session_state.entered == st.session_state.code:
+                    st.session_state.verified = True
+                    st.success("Verified!")
+                else:
+                    st.error("Wrong code")
+
+        if st.session_state.verified:
+            st.session_state.desc = st.text_area("Description (Optional)", value=st.session_state.desc, key=f"desc_{item}")
+            if st.button("Submit Purchase", key=f"submit_{item}"):
+                try:
+                    yag = yagmail.SMTP(SENDER_EMAIL, SENDER_PASSWORD)
+                    yag.send(st.session_state.gmail, "PKSMP Purchase",
+                             f"You ordered: {item}\nJoin discord: http://dsc.gg/pksmp")
+                    yag.send(OWNER_EMAIL, "New Order",
+                             f"Item: {item}\nDiscord:{st.session_state.discord}\nEmail:{st.session_state.gmail}\nDesc:{st.session_state.desc}")
+                    st.success("Request sent!")
+
+                    # Reset
+                    st.session_state.show_form = False
+                    st.session_state.verified = False
+                    st.session_state.code = ""
+                    st.session_state.entered = ""
+                    st.session_state.discord = ""
+                    st.session_state.gmail = ""
+                    st.session_state.desc = ""
+                except:
+                    st.error("Error sending purchase request")
+
 # ---------------- RANK STORE ----------------
 if store=="Ranks":
 
@@ -240,6 +249,7 @@ if store=="Crate Keys":
             """,unsafe_allow_html=True)
 
             purchase(c.name+" Crate Key")
+
 
 
 
