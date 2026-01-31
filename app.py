@@ -147,7 +147,7 @@ Crate("Mythic","4 USDT")
 
 # ---------------- HEADER ----------------
 st.markdown("<div class='title'>🔥 PKSMP STORE 🔥</div>",unsafe_allow_html=True)
-store=st.selectbox("Choose Category",["Ranks","Crate Keys"])
+store=st.radio("Choose Category",["Ranks","Crate Keys"])
 
 # ---------------- EMAIL PURCHASE SYSTEM ----------------
 def purchase(item):
@@ -237,3 +237,4 @@ if store=="Crate Keys":
             """,unsafe_allow_html=True)
 
             purchase(c.name+" Crate Key")
+
