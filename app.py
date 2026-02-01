@@ -89,33 +89,33 @@ class Crate:
 
 # ---------------- DATA ----------------
 ranks = [
-    Rank("PRO Rank", "1 USDT",
+    Rank("PRO Rank", "2 USDT",
          "Iron Armor Kit (24h)\n"
          "1 Golden Apple\n"
          "Food\n"
          "/kit PRO"),
 
-    Rank("VIP Rank", "2 USDT",
+    Rank("VIP Rank", "3.5 USDT",
          "Iron Armor Kit (Unbreaking 1, Protection 1)\n"
          "6 Golden Apples\n"
          "Food\n"
          "/kit VIP"),
 
-    Rank("Deadliest Rank", "3 USDT",
+    Rank("Deadliest Rank", "5 USDT",
          "Diamond Armor Kit (24h)\n"
          "8 Golden Apples\n"
          "Food\n"
          "/echest\n"
          "/kit Deadliest"),
 
-    Rank("God Rank", "4 USDT",
+    Rank("God Rank", "6.5 USDT",
          "Diamond Armor Kit (Unbreaking 1, Protection 2)\n"
          "16 Golden Apples\n"
          "/echest\n"
          "/craft\n"
          "/kit God"),
 
-    Rank("Hero Rank", "5 USDT",
+    Rank("Hero Rank", "8 USDT",
          "Diamond Armor Kit (Unbreaking 2, Protection 2) every 24h\n"
          "20 Golden Apples\n"
          "Food\n"
@@ -124,7 +124,7 @@ ranks = [
          "/anvil\n"
          "/kit Hero"),
 
-    Rank("Devil Rank", "6 USDT",
+    Rank("Devil Rank", "10 USDT",
          "Diamond Armor Kit (Unbreaking 3, Protection 3) every 24h\n"
          "32 Golden Apples\n"
          "Food\n"
@@ -249,6 +249,7 @@ if store=="Crate Keys":
             """,unsafe_allow_html=True)
 
             purchase(c.name+" Crate Key")
+
 
 
 
