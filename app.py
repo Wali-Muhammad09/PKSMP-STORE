@@ -143,7 +143,7 @@ ranks = [
 # Crate("Epic","2 USDT"),
 # Crate("Legendary","3 USDT"),
 # Crate("Mythic","4 USDT")
-]
+# ]
 
 # ---------------- HEADER ----------------
 st.markdown("<div class='title'>🔥 PKSMP STORE 🔥</div>",unsafe_allow_html=True)
@@ -249,6 +249,7 @@ if store=="Crate Keys":
             """,unsafe_allow_html=True)
 
             purchase(c.name+" Crate Key")
+
 
 
 
